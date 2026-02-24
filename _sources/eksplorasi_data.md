@@ -1,4 +1,4 @@
-# Eksplorasi Data Iris
+# Eksplorasi Data
 
 ## 1. Pendahuluan
 
