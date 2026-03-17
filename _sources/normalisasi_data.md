@@ -248,3 +248,7 @@ Dibulatkan menjadi 3
 | No | IPK | PO | JML |
 |----|-----|--------|-----|
 | 7 | 2 | 3000000 | 3 |
+
+## Kesimpulan
+Normalisasi dilakukan menggunakan metode Min-Max, Z-Score, dan Decimal Scaling untuk menyamakan skala seluruh atribut 
+Missing value pada JML dihitung menggunakan metode WKNN berdasarkan jarak dan bobot data terdekat, kemudian dilakukan denormalisasi untuk mendapatkan nilai akhir.
