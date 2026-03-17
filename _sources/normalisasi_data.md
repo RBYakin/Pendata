@@ -1,7 +1,7 @@
 # Normalisasi Data (Preprocessing)
 
 ## Pengertian Normalisasi Data
-Normalisasi data adalah proses mengubah nilai data ke dalam skala tertentu agar memiliki rentang yang seragam. Tujuannya adalah untuk menghindari dominasi atribut tertentu dan mempermudah proses perhitungan dalam data mining.
+Normalisasi data adalah proses mengubah nilai data ke dalam skala tertentu agar memiliki rentang yang seragam sehingga mempermudah proses analisis dan perhitungan.
 
 ---
 
@@ -17,7 +17,6 @@ Normalisasi data adalah proses mengubah nilai data ke dalam skala tertentu agar 
 | 6 | 4 | 4000000 | 3 |
 | 7 | 2 | 3000000 | - |
 
-
 ---
 
 # METODE NORMALISASI DATA
@@ -32,9 +31,45 @@ X' = (X - Xmin) / (Xmax - Xmin)
 ---
 
 ### Nilai Minimum dan Maksimum
-- IPK: min = 2, max = 4  
-- PO: min = 2000000, max = 4000000  
-- JML: min = 2, max = 3  
+IPK:
+- Xmin = 2  
+- Xmax = 4  
+
+PO:
+- Xmin = 2000000  
+- Xmax = 4000000  
+
+JML:
+- Xmin = 2  
+- Xmax = 3  
+
+---
+
+### Contoh Perhitungan
+
+Data ke-1:
+
+IPK:
+X' = (2 - 2) / (4 - 2) = 0 / 2 = 0  
+
+PO:
+X' = (2000000 - 2000000) / (4000000 - 2000000) = 0 / 2000000 = 0  
+
+JML:
+X' = (2 - 2) / (3 - 2) = 0 / 1 = 0  
+
+---
+
+Data ke-2:
+
+IPK:
+X' = (3 - 2) / (4 - 2) = 1 / 2 = 0.5  
+
+PO:
+X' = (3000000 - 2000000) / (4000000 - 2000000) = 1000000 / 2000000 = 0.5  
+
+JML:
+X' = (3 - 2) / (3 - 2) = 1 / 1 = 1  
 
 ---
 
@@ -59,16 +94,28 @@ Z = (X - μ) / σ
 
 ---
 
-### Perhitungan
-- Rata-rata (μ):
-  - IPK = 2.86  
-  - PO = 2.57  
-  - JML = 2.5  
+### Perhitungan Rata-rata (μ)
 
-- Standar deviasi (σ):
-  - IPK ≈ 0.83  
-  - PO ≈ 0.83  
-  - JML ≈ 0.5  
+IPK:
+μ = (2+3+4+2+3+4+2) / 7 = 20 / 7 = 2.86  
+
+PO:
+μ = (2+3+2+2+3+4+3) / 7 = 19 / 7 = 2.71  
+
+JML:
+μ = (2+3+2+3+2+3) / 6 = 15 / 6 = 2.5  
+
+---
+
+### Contoh Perhitungan
+
+Data ke-1 (IPK):
+
+Z = (2 - 2.86) / 0.83 = -0.86 / 0.83 = -1.04  
+
+Data ke-2 (JML):
+
+Z = (3 - 2.5) / 0.5 = 0.5 / 0.5 = 1  
 
 ---
 
@@ -94,9 +141,30 @@ X' = X / (10^j)
 ---
 
 ### Penentuan Nilai j
-- IPK → j = 1  
-- PO → j = 7  
-- JML → j = 1  
+
+IPK:
+nilai maksimum = 4 → j = 1  
+
+PO:
+nilai maksimum = 4000000 → j = 7  
+
+JML:
+nilai maksimum = 3 → j = 1  
+
+---
+
+### Contoh Perhitungan
+
+Data ke-1:
+
+IPK:
+X' = 2 / 10 = 0.2  
+
+PO:
+X' = 2000000 / 10^7 = 0.2  
+
+JML:
+X' = 2 / 10 = 0.2  
 
 ---
 
@@ -116,58 +184,62 @@ X' = X / (10^j)
 
 # Handling Missing Value Menggunakan WKNN
 
-## Tujuan
-Menentukan nilai JML pada data ke-7 yang masih kosong.
-
----
-
-## 1. Menggunakan hasil normalisasi Min-Max
-
+## Langkah 1: Data yang digunakan
 Data ke-7:
-- IPK = 0  
-- PO = 0.5  
+IPK = 0  
+PO = 0.5  
 
 ---
 
-## 2. Menghitung jarak
+## Langkah 2: Menghitung jarak
 
 Rumus:
 d = √((x1-x2)² + (y1-y2)²)
 
 ---
 
-## 3. Perhitungan jarak
+### Perhitungan
 
-| Data | IPK | PO | JML | Jarak |
-|------|-----|-----|-----|-------|
-| Data ke-2 | 0.5 | 0.5 | 1 | 0.5 |
-| Data ke-5 | 0.5 | 0.5 | 0 | 0.5 |
+Ke data ke-2:
+
+d = √((0 - 0.5)² + (0.5 - 0.5)²)  
+d = √(0.25 + 0)  
+d = 0.5  
+
+Ke data ke-5:
+
+d = √((0 - 0.5)² + (0.5 - 0.5)²)  
+d = √(0.25 + 0)  
+d = 0.5  
 
 ---
 
-## 4. Menghitung bobot
+## Langkah 3: Menghitung bobot
 
+Rumus:
 w = 1 / d  
 
-- Bobot data ke-2 = 2  
-- Bobot data ke-5 = 2  
+w2 = 1 / 0.5 = 2  
+w5 = 1 / 0.5 = 2  
 
 ---
 
-## 5. Menghitung nilai JML (hasil normalisasi)
+## Langkah 4: Menghitung nilai JML (normalisasi)
 
 JML = ((2×1) + (2×0)) / (2+2)  
-JML = 0.5  
+JML = 2 / 4 = 0.5  
 
 ---
 
-## 6. Denormalisasi
+## Langkah 5: Denormalisasi
 
-Karena Min-Max:
+Rumus:
 X = X' × (max - min) + min  
 
-JML = (0.5 × (3-2)) + 2  
-JML = 2.5 → dibulatkan menjadi **3**
+JML = 0.5 × (3 - 2) + 2  
+JML = 0.5 + 2 = 2.5  
+
+Dibulatkan menjadi 3
 
 ---
 
@@ -176,9 +248,3 @@ JML = 2.5 → dibulatkan menjadi **3**
 | No | IPK | PO | JML |
 |----|-----|--------|-----|
 | 7 | 2 | 3000000 | 3 |
-
----
-
-## Kesimpulan
-Normalisasi dilakukan menggunakan metode Min-Max, Z-Score, dan Decimal Scaling untuk menyamakan skala seluruh atribut 
-Missing value pada JML dihitung menggunakan metode WKNN berdasarkan jarak dan bobot data terdekat, kemudian dilakukan denormalisasi untuk mendapatkan nilai akhir.
