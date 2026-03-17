@@ -180,12 +180,15 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Pertemuan_2</a></li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Pertemuan_2</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="mengukur_jarak.html">MENGUKUR JARAK (SIMILARITY &amp; DISSIMILARITY)</a></li>
 
 
 
 
 
+</ul>
+</details></li>
 </ul>
 
     </div>
@@ -358,9 +361,7 @@ document.write(`
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</label>
+
 </div></div>
       
     </div>
@@ -376,20 +377,6 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Pertemuan_2</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#business-understanding">Business Understanding</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-understanding">Data Understanding</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preparation">Data Preparation</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#modelling">Modelling</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#deployment">Deployment</a></li>
-</ul>
-
-            </nav>
         </div>
     </div>
 </div>
@@ -401,56 +388,6 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="pertemuan-2">
 <h1>Pertemuan_2<a class="headerlink" href="#pertemuan-2" title="Permalink to this heading">#</a></h1>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="business-understanding">
-<h1>Business Understanding<a class="headerlink" href="#business-understanding" title="Permalink to this heading">#</a></h1>
-<ul class="simple">
-<li><p>Fokus pada tujuan bisnis yang ingin dicapai.</p></li>
-<li><p>Menentukan masalah utama yang harus diselesaikan dengan data.</p></li>
-<li><p>Mengidentifikasi indikator keberhasilan (misalnya peningkatan penjualan, efisiensi operasional).</p></li>
-<li><p>Contoh: Perusahaan ingin mengetahui faktor yang memengaruhi churn pelanggan agar bisa menurunkan tingkat kehilangan pelanggan.</p></li>
-</ul>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="data-understanding">
-<h1>Data Understanding<a class="headerlink" href="#data-understanding" title="Permalink to this heading">#</a></h1>
-<ul class="simple">
-<li><p>Mengumpulkan data yang relevan dari berbagai sumber.</p></li>
-<li><p>Melakukan eksplorasi awal untuk memahami struktur, kualitas, dan isi data.</p></li>
-<li><p>Mengidentifikasi masalah kualitas data seperti missing values, duplikasi, atau outlier.</p></li>
-<li><p>Contoh: Mengecek distribusi umur pelanggan, rata-rata transaksi, atau pola pembelian.</p></li>
-</ul>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="data-preparation">
-<h1>Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this heading">#</a></h1>
-<ul class="simple">
-<li><p>Membersihkan dan mengolah data agar siap digunakan dalam pemodelan.</p></li>
-<li><p>Langkah-langkah umum:</p>
-<ul>
-<li><p>Data cleaning: menghapus duplikasi, menangani missing values.</p></li>
-<li><p>Transformasi data: normalisasi, encoding kategori.</p></li>
-<li><p>Feature engineering: membuat variabel baru yang lebih informatif.</p></li>
-</ul>
-</li>
-<li><p>Contoh: Mengubah data tanggal menjadi fitur seperti “hari dalam seminggu” atau “bulan”.</p></li>
-</ul>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="modelling">
-<h1>Modelling<a class="headerlink" href="#modelling" title="Permalink to this heading">#</a></h1>
-<ul class="simple">
-<li><p>Membangun model machine learning atau statistik untuk menjawab masalah bisnis.</p></li>
-<li><p>Memilih algoritma yang sesuai (misalnya regresi, decision tree, random forest, neural network).</p></li>
-<li><p>Melakukan training dan evaluasi model dengan data yang sudah dipersiapkan.</p></li>
-<li><p>Contoh: Membuat model klasifikasi untuk memprediksi apakah pelanggan akan churn atau tidak.</p></li>
-</ul>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="deployment">
-<h1>Deployment<a class="headerlink" href="#deployment" title="Permalink to this heading">#</a></h1>
-<ul class="simple">
-<li><p>Mengimplementasikan model ke dalam sistem nyata agar bisa digunakan secara berkelanjutan.</p></li>
-<li><p>Bisa berupa integrasi ke aplikasi, dashboard, atau API.</p></li>
-<li><p>Memastikan model dapat dipantau dan diperbarui sesuai kebutuhan.</p></li>
-<li><p>Contoh: Model churn prediction dijalankan secara otomatis setiap bulan untuk memberi rekomendasi strategi retensi pelanggan.</p></li>
-</ul>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -509,27 +446,6 @@ document.write(`
             </div>
             
             
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Pertemuan_2</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#business-understanding">Business Understanding</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-understanding">Data Understanding</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preparation">Data Preparation</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#modelling">Modelling</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#deployment">Deployment</a></li>
-</ul>
-
-  </nav></div>
-
-</div></div>
               
             
           </div>
