@@ -4,9 +4,12 @@ NIM 240411100129.
 
 Kelas Penambangan Data IF-4A
 
-- check out [the Jupyter Book documentation](https://jupyterbook.org) for more information.
+Github : RBYakin
 
-Check out the content pages bundled with this sample book to see more.
+Selamat datang di Jupyter Book saya.
 
-```{tableofcontents}
-```
+Haloo, Everyone
+
+Perkenalkan, Nama Saya Yakin. Saat ini saya merupakan mahasiswa Informatika yang memiliki ketertarikan pada bidang teknologi dan pengembangan sistem informasi. Saya memiliki semangat untuk terus belajar dan mengembangkan kemampuan, baik dalam aspek teknis maupun pemecahan masalah.
+
+Saya terbiasa bekerja secara mandiri maupun dalam tim, serta berkomitmen untuk menyelesaikan setiap tanggung jawab dengan disiplin dan integritas. Ke depan, saya berharap dapat terus meningkatkan kompetensi serta memberikan kontribusi yang positif melalui keahlian yang saya miliki.
