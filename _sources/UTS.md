@@ -17,8 +17,6 @@ Dataset terdiri dari beberapa fitur penting seperti:
 
 ---
 
----
-
 ## 2. Data Understanding
 
 Tahap data understanding dilakukan untuk memahami struktur dataset, jenis atribut, distribusi data, serta kualitas data sebelum proses preprocessing dan pemodelan dilakukan.
@@ -77,8 +75,11 @@ Tahapan preprocessing yang dilakukan:
 - Transformasi variabel kategorikal (tekstur tanah) menggunakan **one-hot encoding**
 - Pemisahan fitur dan label
 
-### 📸 Hasil Preprocessing
-![Preprocessing](normalisasi.png)
+### Normalisai data
+![Normalisasi](normalisasi.png)
+
+### Hasil Preprocessing
+![Preprocessing](hsl_normalisasi.png)
 
 ---
 
@@ -125,7 +126,7 @@ Confusion Matrix menunjukkan performa model dalam klasifikasi.
 - Tidak ada kesalahan klasifikasi
 
 ### 📸 Confusion Matrix
-![Confusion Matrix](hasil_matrik.png)
+![Confusion Matrix](hsl_matrix.png)
 
 ---
 
@@ -169,5 +170,3 @@ Untuk pengembangan selanjutnya:
 - Bandingkan dengan metode lain seperti:
   - Decision Tree
   - Random Forest
-
----
