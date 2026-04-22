@@ -99,7 +99,7 @@ Model yang digunakan adalah **K-Nearest Neighbors (KNN)** dengan parameter:
 - **Euclidean** → Menghitung jarak lurus antar data  
 - **Distance Weight** → Tetangga yang lebih dekat lebih berpengaruh  
 
-### 📸 Setting KNN
+### Setting KNN
 ![KNN Setting](knn_setting.png)
 
 ---
@@ -108,13 +108,13 @@ Model yang digunakan adalah **K-Nearest Neighbors (KNN)** dengan parameter:
 
 Evaluasi dilakukan menggunakan **Cross Validation**.
 
-### 📊 Hasil Test & Score:
+### Hasil Test & Score:
 - Accuracy: **100%**
 - Precision: **100%**
 - Recall: **100%**
 - F1-Score: **100%**
 
-### 📸 Hasil Test & Score
+### Hasil Test & Score
 ![Test and Score](test_score.png)
 
 ---
@@ -123,12 +123,12 @@ Evaluasi dilakukan menggunakan **Cross Validation**.
 
 Confusion Matrix menunjukkan performa model dalam klasifikasi.
 
-### 📊 Hasil:
+### Hasil:
 - Subur → 100% 
 - Tidak Subur → 100% 
 - Tidak ada kesalahan klasifikasi
 
-### 📸 Confusion Matrix
+### Confusion Matrix
 ![Confusion Matrix](hsl_matrix.png)
 
 ---
