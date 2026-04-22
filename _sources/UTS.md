@@ -78,6 +78,9 @@ Tahapan preprocessing yang dilakukan:
 ### Normalisai data
 ![Normalisasi](normalisasi.png)
 
+### Isi Missing Values
+![Normalisasi](isi_mssng_values.png)
+
 ### Hasil Preprocessing
 ![Preprocessing](hsl_normalisasi.png)
 
