@@ -158,18 +158,12 @@ Namun, hasil ini juga mengindikasikan bahwa:
 
 ## 8. Kesimpulan
 
-Model KNN mampu mengklasifikasikan kesuburan tanah dengan sangat baik pada dataset ini.
+Dari hasil analisis data sudah valid antara hasil matrixconfusion dengan yang ada pada soal dimana pada soal itu yang subur ada 1000 (50%) sampel dan yang tidak subur itu ada 1000 (50%) sampel dengan total 2000 sampel.
 
-Namun, performa yang sempurna (100%) kemungkinan tidak mencerminkan kondisi dunia nyata karena data terlalu terstruktur.
+### Target pada soal
+![Target](target.png)
 
----
+### Hasil Analisis
+![Analisis](hsl_analisis.png)
 
-## 9. Saran
 
-Untuk pengembangan selanjutnya:
-
-- Gunakan dataset yang lebih kompleks
-- Tambahkan variasi atau noise data
-- Bandingkan dengan metode lain seperti:
-  - Decision Tree
-  - Random Forest
