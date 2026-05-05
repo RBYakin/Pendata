@@ -419,6 +419,8 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementasi-model-python-script">4. Implementasi Model (Python Script)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-dan-evaluasi">5. Hasil dan Evaluasi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">6. Kesimpulan</a></li>
 </ul>
             </nav>
         </div>
@@ -468,136 +470,57 @@ document.write(`
 <section id="implementasi-model-python-script">
 <h2>4. Implementasi Model (Python Script)<a class="headerlink" href="#implementasi-model-python-script" title="Permalink to this heading">#</a></h2>
 <p>Kami menggunakan library <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> untuk menjalankan algoritma Naive Bayes. Berikut adalah kode final yang digunakan:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>import pandas as pd
-import numpy as np
-from sklearn.naive_bayes import GaussianNB
-import knime.scripting.io as knio
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.naive_bayes</span><span class="w"> </span><span class="kn">import</span> <span class="n">GaussianNB</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">knime.scripting.io</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">knio</span>
 
-# Mengambil data dari KNIME
-train_df = knio.input_tables[0].to_pandas()
-test_df = knio.input_tables[1].to_pandas()
+<span class="c1"># Mengambil data dari KNIME</span>
+<span class="n">train_df</span> <span class="o">=</span> <span class="n">knio</span><span class="o">.</span><span class="n">input_tables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
+<span class="n">test_df</span> <span class="o">=</span> <span class="n">knio</span><span class="o">.</span><span class="n">input_tables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
 
-# Fungsi pembersihan otomatis (Auto-clean)
-def clean_data(df):
-    df = df.drop(columns=[&#39;No.&#39;], errors=&#39;ignore&#39;)
-    for col in df.columns:
-        # Konversi paksa ke numerik, string akan menjadi NaN lalu diubah ke 0
-        df[col] = pd.to_numeric(df[col], errors=&#39;coerce&#39;)
-    return df.fillna(0)
+<span class="c1"># Fungsi pembersihan otomatis (Auto-clean)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">clean_data</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;No.&#39;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="c1"># Konversi paksa ke numerik, string akan menjadi NaN lalu diubah ke 0</span>
+        <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;coerce&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
-# Proses Data
-X_train_final = clean_data(train_df)
-X_test_final = clean_data(test_df)
+<span class="c1"># Proses Data</span>
+<span class="n">X_train_final</span> <span class="o">=</span> <span class="n">clean_data</span><span class="p">(</span><span class="n">train_df</span><span class="p">)</span>
+<span class="n">X_test_final</span> <span class="o">=</span> <span class="n">clean_data</span><span class="p">(</span><span class="n">test_df</span><span class="p">)</span>
 
-# Pemisahan Fitur dan Target (Kolom Terakhir)
-target_name = X_train_final.columns[-1]
-y_train = X_train_final[target_name].astype(int)
-X_train = X_train_final.drop(columns=[target_name])
+<span class="c1"># Pemisahan Fitur dan Target (Kolom Terakhir)</span>
+<span class="n">target_name</span> <span class="o">=</span> <span class="n">X_train_final</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">X_train_final</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">X_train_final</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">])</span>
 
-# Training Model
-model = GaussianNB()
-model.fit(X_train, y_train)
+<span class="c1"># Training Model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
-# Prediksi
-predictions = model.predict(X_test_final.drop(columns=[target_name]))
+<span class="c1"># Prediksi</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_final</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">]))</span>
 
-# Output kembali ke KNIME
-result_df = test_df.copy()
-result_df[&#39;Prediksi_Hasil&#39;] = predictions
-knio.output_tables[0] = knio.Table.from_pandas(result_df)
-
-## Tentu, ini adalah draf lengkap dalam format Markdown (.md) yang sudah saya susun secara sistematis. Kamu bisa langsung menyalin kode di bawah ini ke editor teks (seperti Notepad, VS Code, atau Obsidian) dan menyimpannya dengan ekstensi .md (misalnya: Laporan_Stunting.md).
-
-Pastikan kamu sudah menyiapkan file gambar dengan nama yang sesuai agar muncul di dokumen.
-
-Markdown
-# Dokumentasi Proyek: Klasifikasi Stunting Menggunakan Algoritma Naive Bayes di KNIME
-
-Dokumentasi ini merangkum proses pengembangan model *Machine Learning* untuk mengklasifikasikan status stunting menggunakan platform KNIME Analytics Platform dan integrasi Python.
-
----
-
-## 1. Pendahuluan
-Proyek ini bertujuan untuk memprediksi status stunting dan wasting pada anak berdasarkan data antropometri. Algoritma yang digunakan adalah **Naive Bayes** (Gaussian) yang diimplementasikan melalui script Python di dalam ekosistem KNIME.
-
----
-
-## 2. Arsitektur Workflow
-Workflow dirancang untuk mengolah data mentah dari CSV hingga menghasilkan statistik akurasi akhir.
-
-### Gambaran Besar Workflow
-![Full Workflow KNIME](full_workflow.png)
-*Keterangan: Hubungkan node dari CSV Reader -&gt; Category to Number -&gt; Partitioning -&gt; Python Script -&gt; Scorer.*
-
----
-
-## 3. Tahapan Pre-processing Data
-Sebelum masuk ke model, data melalui tahap pembersihan untuk memastikan tidak ada error saat perhitungan matematika.
-
-### Langkah-langkah:
-1. **CSV Reader**: Membaca dataset `prhtngn_stunting_mtd_NBY.csv` dengan semicolon `;` sebagai pemisah.
-2. **Category to Number**: Mengubah data kategorikal seperti &#39;Jenis Kelamin&#39; dan &#39;Stunting&#39; menjadi representasi angka (Label Encoding).
-3. **Partitioning**: Membagi data menjadi **80% Training Data** dan **20% Testing Data**.
-
-&gt; **Tips:** Pastikan kolom target sudah diubah menjadi angka agar tidak menyebabkan error `ValueError` pada script Python.
-
----
-
-## 4. Implementasi Model (Python Script)
-Kami menggunakan library `scikit-learn` untuk menjalankan algoritma Naive Bayes. Berikut adalah kode final yang digunakan:
-
-```python
-import pandas as pd
-import numpy as np
-from sklearn.naive_bayes import GaussianNB
-import knime.scripting.io as knio
-
-# Mengambil data dari KNIME
-train_df = knio.input_tables[0].to_pandas()
-test_df = knio.input_tables[1].to_pandas()
-
-# Fungsi pembersihan otomatis (Auto-clean)
-def clean_data(df):
-    df = df.drop(columns=[&#39;No.&#39;], errors=&#39;ignore&#39;)
-    for col in df.columns:
-        # Konversi paksa ke numerik, string akan menjadi NaN lalu diubah ke 0
-        df[col] = pd.to_numeric(df[col], errors=&#39;coerce&#39;)
-    return df.fillna(0)
-
-# Proses Data
-X_train_final = clean_data(train_df)
-X_test_final = clean_data(test_df)
-
-# Pemisahan Fitur dan Target (Kolom Terakhir)
-target_name = X_train_final.columns[-1]
-y_train = X_train_final[target_name].astype(int)
-X_train = X_train_final.drop(columns=[target_name])
-
-# Training Model
-model = GaussianNB()
-model.fit(X_train, y_train)
-
-# Prediksi
-predictions = model.predict(X_test_final.drop(columns=[target_name]))
-
-# Output kembali ke KNIME
-result_df = test_df.copy()
-result_df[&#39;Prediksi_Hasil&#39;] = predictions
-knio.output_tables[0] = knio.Table.from_pandas(result_df)
-
-## 5. Hasil dan Evaluasi
-Evaluasi dilakukan menggunakan node Scorer (JavaScript) untuk membandingkan label asli dengan hasil prediksi model.
-
-Confusion Matrix
-Keterangan: Tabel ini menunjukkan distribusi prediksi benar dan salah untuk setiap kategori.
-
-Statistik Akurasi
-Keterangan: Di sini kita dapat melihat nilai Overall Accuracy, Precision, dan Recall dari model.
-
-## 6. Kesimpulan
-Model Naive Bayes berhasil diimplementasikan dengan integrasi Python di KNIME. Penggunaan teknik force-to-numeric pada pre-processing sangat krusial untuk menangani data campuran (string dan numerik) yang sering ditemukan pada dataset kesehatan.
+<span class="c1"># Output kembali ke KNIME</span>
+<span class="n">result_df</span> <span class="o">=</span> <span class="n">test_df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">result_df</span><span class="p">[</span><span class="s1">&#39;Prediksi_Hasil&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">predictions</span>
+<span class="n">knio</span><span class="o">.</span><span class="n">output_tables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">knio</span><span class="o">.</span><span class="n">Table</span><span class="o">.</span><span class="n">from_pandas</span><span class="p">(</span><span class="n">result_df</span><span class="p">)</span>
 </pre></div>
 </div>
+</section>
+<section id="hasil-dan-evaluasi">
+<h2>5. Hasil dan Evaluasi<a class="headerlink" href="#hasil-dan-evaluasi" title="Permalink to this heading">#</a></h2>
+<p>Evaluasi dilakukan menggunakan node Scorer (JavaScript) untuk membandingkan label asli dengan hasil prediksi model.</p>
+<p>Confusion Matrix
+Keterangan: Tabel ini menunjukkan distribusi prediksi benar dan salah untuk setiap kategori.</p>
+<p>Statistik Akurasi
+Keterangan: Di sini kita dapat melihat nilai Overall Accuracy, Precision, dan Recall dari model.</p>
+</section>
+<section id="kesimpulan">
+<h2>6. Kesimpulan<a class="headerlink" href="#kesimpulan" title="Permalink to this heading">#</a></h2>
+<p>Model Naive Bayes berhasil diimplementasikan dengan integrasi Python di KNIME. Penggunaan teknik force-to-numeric pada pre-processing sangat krusial untuk menangani data campuran (string dan numerik) yang sering ditemukan pada dataset kesehatan.</p>
 </section>
 </section>
 
@@ -666,6 +589,8 @@ Model Naive Bayes berhasil diimplementasikan dengan integrasi Python di KNIME. P
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementasi-model-python-script">4. Implementasi Model (Python Script)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-dan-evaluasi">5. Hasil dan Evaluasi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">6. Kesimpulan</a></li>
 </ul>
   </nav></div>
 
