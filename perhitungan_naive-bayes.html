@@ -386,7 +386,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -402,6 +404,23 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pendahuluan">1. Pendahuluan</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arsitektur-workflow">2. Arsitektur Workflow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gambaran-besar-workflow">Gambaran Besar Workflow</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tahapan-pre-processing-data">3. Tahapan Pre-processing Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-langkah">Langkah-langkah:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementasi-model-python-script">4. Implementasi Model (Python Script)</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -413,6 +432,173 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="perhitungan-naive-bayes">
 <h1>Perhitungan Naive-bayes<a class="headerlink" href="#perhitungan-naive-bayes" title="Permalink to this heading">#</a></h1>
+<p>Dokumentasi ini merangkum proses pengembangan model <em>Machine Learning</em> untuk mengklasifikasikan status stunting menggunakan platform KNIME Analytics Platform dan integrasi Python.</p>
+<hr class="docutils" />
+<section id="pendahuluan">
+<h2>1. Pendahuluan<a class="headerlink" href="#pendahuluan" title="Permalink to this heading">#</a></h2>
+<p>Proyek ini bertujuan untuk memprediksi status stunting dan wasting pada anak berdasarkan data antropometri. Algoritma yang digunakan adalah <strong>Naive Bayes</strong> (Gaussian) yang diimplementasikan melalui script Python di dalam ekosistem KNIME.</p>
+</section>
+<hr class="docutils" />
+<section id="arsitektur-workflow">
+<h2>2. Arsitektur Workflow<a class="headerlink" href="#arsitektur-workflow" title="Permalink to this heading">#</a></h2>
+<p>Workflow dirancang untuk mengolah data mentah dari CSV hingga menghasilkan statistik akurasi akhir.</p>
+<section id="gambaran-besar-workflow">
+<h3>Gambaran Besar Workflow<a class="headerlink" href="#gambaran-besar-workflow" title="Permalink to this heading">#</a></h3>
+<p><img alt="Full Workflow KNIME" src="_images/full_workflow.png" />
+<em>Keterangan: Hubungkan node dari CSV Reader -&gt; Category to Number -&gt; Partitioning -&gt; Python Script -&gt; Scorer.</em></p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="tahapan-pre-processing-data">
+<h2>3. Tahapan Pre-processing Data<a class="headerlink" href="#tahapan-pre-processing-data" title="Permalink to this heading">#</a></h2>
+<p>Sebelum masuk ke model, data melalui tahap pembersihan untuk memastikan tidak ada error saat perhitungan matematika.</p>
+<section id="langkah-langkah">
+<h3>Langkah-langkah:<a class="headerlink" href="#langkah-langkah" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>CSV Reader</strong>: Membaca dataset <code class="docutils literal notranslate"><span class="pre">prhtngn_stunting_mtd_NBY.csv</span></code> dengan semicolon <code class="docutils literal notranslate"><span class="pre">;</span></code> sebagai pemisah.</p></li>
+<li><p><strong>Category to Number</strong>: Mengubah data kategorikal seperti ‘Jenis Kelamin’ dan ‘Stunting’ menjadi representasi angka (Label Encoding).</p></li>
+<li><p><strong>Partitioning</strong>: Membagi data menjadi <strong>80% Training Data</strong> dan <strong>20% Testing Data</strong>.</p></li>
+</ol>
+<blockquote>
+<div><p><strong>Tips:</strong> Pastikan kolom target sudah diubah menjadi angka agar tidak menyebabkan error <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> pada script Python.</p>
+</div></blockquote>
+</section>
+</section>
+<hr class="docutils" />
+<section id="implementasi-model-python-script">
+<h2>4. Implementasi Model (Python Script)<a class="headerlink" href="#implementasi-model-python-script" title="Permalink to this heading">#</a></h2>
+<p>Kami menggunakan library <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> untuk menjalankan algoritma Naive Bayes. Berikut adalah kode final yang digunakan:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+import numpy as np
+from sklearn.naive_bayes import GaussianNB
+import knime.scripting.io as knio
+
+# Mengambil data dari KNIME
+train_df = knio.input_tables[0].to_pandas()
+test_df = knio.input_tables[1].to_pandas()
+
+# Fungsi pembersihan otomatis (Auto-clean)
+def clean_data(df):
+    df = df.drop(columns=[&#39;No.&#39;], errors=&#39;ignore&#39;)
+    for col in df.columns:
+        # Konversi paksa ke numerik, string akan menjadi NaN lalu diubah ke 0
+        df[col] = pd.to_numeric(df[col], errors=&#39;coerce&#39;)
+    return df.fillna(0)
+
+# Proses Data
+X_train_final = clean_data(train_df)
+X_test_final = clean_data(test_df)
+
+# Pemisahan Fitur dan Target (Kolom Terakhir)
+target_name = X_train_final.columns[-1]
+y_train = X_train_final[target_name].astype(int)
+X_train = X_train_final.drop(columns=[target_name])
+
+# Training Model
+model = GaussianNB()
+model.fit(X_train, y_train)
+
+# Prediksi
+predictions = model.predict(X_test_final.drop(columns=[target_name]))
+
+# Output kembali ke KNIME
+result_df = test_df.copy()
+result_df[&#39;Prediksi_Hasil&#39;] = predictions
+knio.output_tables[0] = knio.Table.from_pandas(result_df)
+
+## Tentu, ini adalah draf lengkap dalam format Markdown (.md) yang sudah saya susun secara sistematis. Kamu bisa langsung menyalin kode di bawah ini ke editor teks (seperti Notepad, VS Code, atau Obsidian) dan menyimpannya dengan ekstensi .md (misalnya: Laporan_Stunting.md).
+
+Pastikan kamu sudah menyiapkan file gambar dengan nama yang sesuai agar muncul di dokumen.
+
+Markdown
+# Dokumentasi Proyek: Klasifikasi Stunting Menggunakan Algoritma Naive Bayes di KNIME
+
+Dokumentasi ini merangkum proses pengembangan model *Machine Learning* untuk mengklasifikasikan status stunting menggunakan platform KNIME Analytics Platform dan integrasi Python.
+
+---
+
+## 1. Pendahuluan
+Proyek ini bertujuan untuk memprediksi status stunting dan wasting pada anak berdasarkan data antropometri. Algoritma yang digunakan adalah **Naive Bayes** (Gaussian) yang diimplementasikan melalui script Python di dalam ekosistem KNIME.
+
+---
+
+## 2. Arsitektur Workflow
+Workflow dirancang untuk mengolah data mentah dari CSV hingga menghasilkan statistik akurasi akhir.
+
+### Gambaran Besar Workflow
+![Full Workflow KNIME](full_workflow.png)
+*Keterangan: Hubungkan node dari CSV Reader -&gt; Category to Number -&gt; Partitioning -&gt; Python Script -&gt; Scorer.*
+
+---
+
+## 3. Tahapan Pre-processing Data
+Sebelum masuk ke model, data melalui tahap pembersihan untuk memastikan tidak ada error saat perhitungan matematika.
+
+### Langkah-langkah:
+1. **CSV Reader**: Membaca dataset `prhtngn_stunting_mtd_NBY.csv` dengan semicolon `;` sebagai pemisah.
+2. **Category to Number**: Mengubah data kategorikal seperti &#39;Jenis Kelamin&#39; dan &#39;Stunting&#39; menjadi representasi angka (Label Encoding).
+3. **Partitioning**: Membagi data menjadi **80% Training Data** dan **20% Testing Data**.
+
+&gt; **Tips:** Pastikan kolom target sudah diubah menjadi angka agar tidak menyebabkan error `ValueError` pada script Python.
+
+---
+
+## 4. Implementasi Model (Python Script)
+Kami menggunakan library `scikit-learn` untuk menjalankan algoritma Naive Bayes. Berikut adalah kode final yang digunakan:
+
+```python
+import pandas as pd
+import numpy as np
+from sklearn.naive_bayes import GaussianNB
+import knime.scripting.io as knio
+
+# Mengambil data dari KNIME
+train_df = knio.input_tables[0].to_pandas()
+test_df = knio.input_tables[1].to_pandas()
+
+# Fungsi pembersihan otomatis (Auto-clean)
+def clean_data(df):
+    df = df.drop(columns=[&#39;No.&#39;], errors=&#39;ignore&#39;)
+    for col in df.columns:
+        # Konversi paksa ke numerik, string akan menjadi NaN lalu diubah ke 0
+        df[col] = pd.to_numeric(df[col], errors=&#39;coerce&#39;)
+    return df.fillna(0)
+
+# Proses Data
+X_train_final = clean_data(train_df)
+X_test_final = clean_data(test_df)
+
+# Pemisahan Fitur dan Target (Kolom Terakhir)
+target_name = X_train_final.columns[-1]
+y_train = X_train_final[target_name].astype(int)
+X_train = X_train_final.drop(columns=[target_name])
+
+# Training Model
+model = GaussianNB()
+model.fit(X_train, y_train)
+
+# Prediksi
+predictions = model.predict(X_test_final.drop(columns=[target_name]))
+
+# Output kembali ke KNIME
+result_df = test_df.copy()
+result_df[&#39;Prediksi_Hasil&#39;] = predictions
+knio.output_tables[0] = knio.Table.from_pandas(result_df)
+
+## 5. Hasil dan Evaluasi
+Evaluasi dilakukan menggunakan node Scorer (JavaScript) untuk membandingkan label asli dengan hasil prediksi model.
+
+Confusion Matrix
+Keterangan: Tabel ini menunjukkan distribusi prediksi benar dan salah untuk setiap kategori.
+
+Statistik Akurasi
+Keterangan: Di sini kita dapat melihat nilai Overall Accuracy, Precision, dan Recall dari model.
+
+## 6. Kesimpulan
+Model Naive Bayes berhasil diimplementasikan dengan integrasi Python di KNIME. Penggunaan teknik force-to-numeric pada pre-processing sangat krusial untuk menangani data campuran (string dan numerik) yang sering ditemukan pada dataset kesehatan.
+</pre></div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -460,6 +646,30 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pendahuluan">1. Pendahuluan</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arsitektur-workflow">2. Arsitektur Workflow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gambaran-besar-workflow">Gambaran Besar Workflow</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tahapan-pre-processing-data">3. Tahapan Pre-processing Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-langkah">Langkah-langkah:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementasi-model-python-script">4. Implementasi Model (Python Script)</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
