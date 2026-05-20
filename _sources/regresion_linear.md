@@ -119,32 +119,32 @@ Berdasarkan integrasi hasil dari perhitungan rumus persamaan linear $Y = 1.0769X
 
 Untuk memvisualisasikan data ini ke dalam grafik kartesius di GeoGebra, lakukan langkah input objek berikut pada kolom masukan (*input bar*):
 * **Input Titik Sampel:** `A=(2,2)`, `B=(4,3)`, `C=(5,5)`, `D=(3,4)`, `E=(3,3)`, `F=(4,5)`, `G=(5,6)`
-![alt text](image-38.png)
+
 * **Input Garis Linear:** `f(x) = 1.0769x` atau ketik perintah `FitLine({A,B,C,D,E,F,G})`
-![alt text](image-39.png)
+
 * **Input Titik Prediksi:** `H=(0,0)` dan `I=(1,1.0769)`
-![alt text](image-40.png)
+
 
 Berikut adalah struktur posisi penempatan tangkapan layar (*screenshot*) grafik GeoGebra Anda untuk laporan:
 
 ### A. Diagram Pencar (Scatter Plot) Data Awal
-*Silakan masukkan screenshot visualisasi sebaran data mentah Anda di bawah ini:*
 
 **[GAMBAR 1: Scatter Plot Titik Data Awal A sampai G di GeoGebra]**
+![alt text](image-38.png)
 
 * **Deskripsi:** Grafik menunjukkan posisi sebaran ketujuh titik data latih berdasarkan sumbu koordinat X dan Y sebelum ditarik garis regresi.
 
 ### B. Garis Regresi Terbaik (Line of Best Fit)
-*Silakan masukkan screenshot visualisasi garis tren regresi Anda di bawah ini:*
 
 **[GAMBAR 2: Plot Garis Regresi f(x) = 1.0769x Membelah Titik Data di GeoGebra]**
+![alt text](image-39.png)
 
 * **Deskripsi:** Grafik menampilkan garis lurus linear terbaik yang ditarik membelah sebaran data untuk meminimalkan nilai kesalahan kuadrat (*error*).
 
 ### C. Validasi Titik Hasil Prediksi Baru
-*Silakan masukkan screenshot visualisasi pembuktian titik prediksi Anda di bawah ini:*
 
 **[GAMBAR 3: Titik Prediksi H dan I yang Berada Tepat pada Lintasan Garis Regresi]**
+![alt text](image-40.png)
 
 * **Deskripsi:** Grafik membuktikan secara visual bahwa koordinat titik prediksi baru `H(0,0)` dan `I(1, 1.0769)` terletak presisi di atas lintasan garis regresi linear $f(x)$.
 
