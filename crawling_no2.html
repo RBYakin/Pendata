@@ -1,0 +1,1288 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Prediksi Konsentrasi Nitrogen Dioksida (NO₂) Menggunakan Metode K-Nearest Neighbor (KNN) &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'crawling_no2';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Pertemuan_9" href="pertemuan_9.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.jpeg" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="_static/logo.jpeg" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    RB. Ainul Yakin
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="pendahuluan.html">Pendahuluan</a></li>
+
+
+
+
+
+<li class="toctree-l1 has-children"><a class="reference internal" href="pertemuan_1.html">Pertemuan_1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="eksplorasi_data.html">Eksplorasi Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="description_data.html">Description Data</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="visualisasi_data.html">Visualisasi Data</a></li>
+
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="pertemuan_2.html">Pertemuan_2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="mengukur_jarak.html">MENGUKUR JARAK (SIMILARITY &amp; DISSIMILARITY)</a></li>
+
+
+
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="pertemuan_3.html">Pertemuan_3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="normalisasi_data.html">Normalisasi Data (Preprocessing)</a></li>
+
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="pertemuan_4.html">Pertemuan_4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="UTS.html">Ujian Tengah Semester</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="pertemuan_5.html">Pertemuan_5</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="perhitungan_naive-bayes.html">Perhitungan Naive-bayes</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="pertemuan_6.html">Pertemuan_6</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="decision_tree.html">Decision Tree Learner</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="pertemuan_7.html">Pertemuan_7</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="random_forest.html">Random Forest</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="pertemuan_8.html">Pertemuan_8</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="regresion_linear.html">LAPORAN LENGKAP: ANALISIS REGRESI LINEAR SEDERHANA</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="pertemuan_9.html">Pertemuan_9</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Prediksi Konsentrasi Nitrogen Dioksida (NO₂) Menggunakan Metode K-Nearest Neighbor (KNN)</a></li>
+
+
+
+
+
+
+
+
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcrawling_no2.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/crawling_no2.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Prediksi Konsentrasi Nitrogen Dioksida (NO₂) Menggunakan Metode K-Nearest Neighbor (KNN)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Prediksi Konsentrasi Nitrogen Dioksida (NO₂) Menggunakan Metode K-Nearest Neighbor (KNN)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#latar-belakang">1. Latar Belakang</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pengumpulan-data">2. Pengumpulan Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian-openeo">2.1 Pengertian OpenEO</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#import-library-openeo">Import Library OpenEO</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#koneksi-ke-server-openeo">2.2 Koneksi ke Server OpenEO</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#penjelasan">Penjelasan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menentukan-area-penelitian">2.3 Menentukan Area Penelitian</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Penjelasan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengambil-data-sentinel-5p">2.4 Mengambil Data Sentinel-5P</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian-sentinel-5p">Pengertian Sentinel-5P</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pengambilan-data">Pengambilan Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Penjelasan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agregasi-data">2.5 Agregasi Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian-agregasi">Pengertian Agregasi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#agregasi-temporal">Agregasi Temporal</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#agregasi-spasial">Agregasi Spasial</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menyimpan-data">2.6 Menyimpan Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Penjelasan</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#persiapan-data">3. Persiapan Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian-format-netcdf">3.1 Pengertian Format NetCDF</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membaca-file-netcdf">Membaca File NetCDF</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Penjelasan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-data">3.2 Eksplorasi Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Penjelasan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengatasi-missing-value">3.3 Mengatasi Missing Value</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian-missing-value">Pengertian Missing Value</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpolasi-linear">Interpolasi Linear</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Penjelasan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menghitung-rata-rata-harian">3.4 Menghitung Rata-rata Harian</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Penjelasan</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pembersihan-data">4. Pembersihan Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pemeriksaan-tanggal-hilang">4.1 Pemeriksaan Tanggal Hilang</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian-missing-timestamp">Pengertian Missing Timestamp</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pemeriksaan">Pemeriksaan</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Penjelasan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pengisian-data-hilang">4.2 Pengisian Data Hilang</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Penjelasan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deteksi-outlier">4.3 Deteksi Outlier</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian-outlier">Pengertian Outlier</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metode-iqr">Metode IQR</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rumus">Rumus</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penanganan-outlier">4.4 Penanganan Outlier</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Penjelasan</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#transformasi-data">5. Transformasi Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konsep-time-series-forecasting">5.1 Konsep Time Series Forecasting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membentuk-dataset-supervised">5.2 Membentuk Dataset Supervised</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Penjelasan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#normalisasi-data">5.3 Normalisasi Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian-min-max-scaling">Pengertian Min-Max Scaling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Rumus</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementasi">Implementasi</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pemodelan-knn">6. Pemodelan KNN</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian-k-nearest-neighbor-regression">6.1 Pengertian K-Nearest Neighbor Regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pembagian-data">6.2 Pembagian Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Penjelasan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pelatihan-model">6.3 Pelatihan Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Penjelasan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prediksi">6.4 Prediksi</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">Penjelasan</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluasi-model">7. Evaluasi Model</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#root-mean-square-error-rmse">7.1 Root Mean Square Error (RMSE)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian">Pengertian</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">Rumus</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-absolute-percentage-error-mape">7.2 Mean Absolute Percentage Error (MAPE)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">Pengertian</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">Rumus</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#r-square-r2">7.3 R-Square (R²)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">Pengertian</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">Rumus</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-hasil">8. Visualisasi Hasil</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">9. Kesimpulan</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="prediksi-konsentrasi-nitrogen-dioksida-no2-menggunakan-metode-k-nearest-neighbor-knn">
+<h1>Prediksi Konsentrasi Nitrogen Dioksida (NO₂) Menggunakan Metode K-Nearest Neighbor (KNN)<a class="headerlink" href="#prediksi-konsentrasi-nitrogen-dioksida-no2-menggunakan-metode-k-nearest-neighbor-knn" title="Permalink to this heading">#</a></h1>
+<section id="latar-belakang">
+<h2>1. Latar Belakang<a class="headerlink" href="#latar-belakang" title="Permalink to this heading">#</a></h2>
+<p>Pencemaran udara merupakan salah satu permasalahan lingkungan yang berdampak langsung terhadap kesehatan manusia dan kualitas lingkungan. Salah satu gas pencemar yang sering dijadikan indikator kualitas udara adalah Nitrogen Dioksida (NO₂). Gas ini umumnya berasal dari aktivitas kendaraan bermotor, industri, serta proses pembakaran bahan bakar fosil.</p>
+<p>Perkembangan teknologi penginderaan jauh memungkinkan pemantauan konsentrasi NO₂ secara berkala menggunakan data satelit. Salah satu satelit yang menyediakan informasi tersebut adalah Sentinel-5P yang dikelola oleh European Space Agency (ESA). Data dari satelit ini dapat dimanfaatkan untuk melakukan analisis tren maupun prediksi konsentrasi NO₂ di masa mendatang.</p>
+<p>Pada penelitian ini digunakan metode K-Nearest Neighbor (KNN) Regression untuk memprediksi nilai konsentrasi NO₂ berdasarkan data historis yang diperoleh dari Sentinel-5P melalui platform OpenEO.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="pengumpulan-data">
+<h1>2. Pengumpulan Data<a class="headerlink" href="#pengumpulan-data" title="Permalink to this heading">#</a></h1>
+<section id="pengertian-openeo">
+<h2>2.1 Pengertian OpenEO<a class="headerlink" href="#pengertian-openeo" title="Permalink to this heading">#</a></h2>
+<p>OpenEO merupakan Application Programming Interface (API) yang menyediakan akses terpadu ke berbagai sumber data penginderaan jauh. OpenEO memudahkan pengguna dalam mengambil, memproses, dan menganalisis data satelit tanpa harus mengunduh keseluruhan dataset secara lokal.</p>
+<p>Melalui OpenEO, pengguna dapat melakukan:</p>
+<ul class="simple">
+<li><p>Pengambilan data satelit</p></li>
+<li><p>Pemotongan wilayah penelitian</p></li>
+<li><p>Agregasi temporal</p></li>
+<li><p>Agregasi spasial</p></li>
+<li><p>Ekspor hasil ke berbagai format data</p></li>
+</ul>
+<section id="import-library-openeo">
+<h3>Import Library OpenEO<a class="headerlink" href="#import-library-openeo" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">openeo</span>
+</pre></div>
+</div>
+<p>Kode tersebut digunakan untuk memanggil library OpenEO ke dalam lingkungan Python.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="koneksi-ke-server-openeo">
+<h2>2.2 Koneksi ke Server OpenEO<a class="headerlink" href="#koneksi-ke-server-openeo" title="Permalink to this heading">#</a></h2>
+<p>Sebelum mengakses data satelit, pengguna harus melakukan autentikasi ke server OpenEO.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">connection</span> <span class="o">=</span> <span class="n">openeo</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+    <span class="s2">&quot;openeo.dataspace.copernicus.eu&quot;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">authenticate_oidc</span><span class="p">()</span>
+</pre></div>
+</div>
+<section id="penjelasan">
+<h3>Penjelasan<a class="headerlink" href="#penjelasan" title="Permalink to this heading">#</a></h3>
+<p>Kode di atas berfungsi untuk:</p>
+<ol class="arabic simple">
+<li><p>Membuat koneksi ke server Copernicus Data Space.</p></li>
+<li><p>Melakukan login menggunakan OpenID Connect (OIDC).</p></li>
+<li><p>Memperoleh hak akses terhadap dataset satelit yang tersedia.</p></li>
+</ol>
+</section>
+</section>
+<hr class="docutils" />
+<section id="menentukan-area-penelitian">
+<h2>2.3 Menentukan Area Penelitian<a class="headerlink" href="#menentukan-area-penelitian" title="Permalink to this heading">#</a></h2>
+<p>Area penelitian didefinisikan dalam bentuk polygon geografis.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">spatial_extent</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<section id="id1">
+<h3>Penjelasan<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<p>Polygon digunakan untuk membatasi wilayah yang akan dianalisis sehingga data yang diproses hanya berasal dari area penelitian.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="mengambil-data-sentinel-5p">
+<h2>2.4 Mengambil Data Sentinel-5P<a class="headerlink" href="#mengambil-data-sentinel-5p" title="Permalink to this heading">#</a></h2>
+<section id="pengertian-sentinel-5p">
+<h3>Pengertian Sentinel-5P<a class="headerlink" href="#pengertian-sentinel-5p" title="Permalink to this heading">#</a></h3>
+<p>Sentinel-5P merupakan satelit pengamatan atmosfer yang menyediakan berbagai parameter kualitas udara, salah satunya adalah Nitrogen Dioksida (NO₂).</p>
+<p>Dataset yang digunakan:</p>
+<ul class="simple">
+<li><p>Produk : Sentinel-5P Level 2</p></li>
+<li><p>Parameter : NO₂</p></li>
+<li><p>Periode : Oktober 2023 – Mei 2026</p></li>
+</ul>
+</section>
+<section id="pengambilan-data">
+<h3>Pengambilan Data<a class="headerlink" href="#pengambilan-data" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s5p</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">load_collection</span><span class="p">(</span>
+    <span class="s2">&quot;SENTINEL_5P_L2&quot;</span><span class="p">,</span>
+    <span class="n">spatial_extent</span><span class="o">=</span><span class="n">spatial_extent</span><span class="p">,</span>
+    <span class="n">temporal_extent</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;2023-10-01&quot;</span><span class="p">,</span><span class="s2">&quot;2026-05-01&quot;</span><span class="p">],</span>
+    <span class="n">bands</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h3>Penjelasan<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<p>Kode tersebut digunakan untuk mengambil data NO₂ sesuai:</p>
+<ul class="simple">
+<li><p>Lokasi penelitian</p></li>
+<li><p>Rentang waktu pengamatan</p></li>
+<li><p>Band yang dibutuhkan</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="agregasi-data">
+<h2>2.5 Agregasi Data<a class="headerlink" href="#agregasi-data" title="Permalink to this heading">#</a></h2>
+<section id="pengertian-agregasi">
+<h3>Pengertian Agregasi<a class="headerlink" href="#pengertian-agregasi" title="Permalink to this heading">#</a></h3>
+<p>Agregasi merupakan proses penyederhanaan data dengan menghitung nilai representatif seperti rata-rata.</p>
+<p>Pada penelitian ini dilakukan:</p>
+</section>
+<section id="agregasi-temporal">
+<h3>Agregasi Temporal<a class="headerlink" href="#agregasi-temporal" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">aggregate_temporal_period</span><span class="p">(</span><span class="s2">&quot;day&quot;</span><span class="p">,</span> <span class="n">reducer</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Digunakan untuk menghitung rata-rata NO₂ setiap hari.</p>
+</section>
+<section id="agregasi-spasial">
+<h3>Agregasi Spasial<a class="headerlink" href="#agregasi-spasial" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">aggregate_spatial</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Digunakan untuk menghitung rata-rata seluruh piksel pada wilayah penelitian.</p>
+<p>Hasil akhir berupa satu nilai NO₂ per hari.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="menyimpan-data">
+<h2>2.6 Menyimpan Data<a class="headerlink" href="#menyimpan-data" title="Permalink to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">job</span> <span class="o">=</span> <span class="n">s5post</span><span class="o">.</span><span class="n">execute_batch</span><span class="p">(</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;NO2&quot;</span><span class="p">,</span>
+    <span class="n">outputfile</span><span class="o">=</span><span class="s2">&quot;NO2.csv&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<section id="id3">
+<h3>Penjelasan<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<p>Kode digunakan untuk menjalankan proses pada server OpenEO dan menyimpan hasil ke file.</p>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="persiapan-data">
+<h1>3. Persiapan Data<a class="headerlink" href="#persiapan-data" title="Permalink to this heading">#</a></h1>
+<section id="pengertian-format-netcdf">
+<h2>3.1 Pengertian Format NetCDF<a class="headerlink" href="#pengertian-format-netcdf" title="Permalink to this heading">#</a></h2>
+<p>NetCDF (Network Common Data Form) merupakan format penyimpanan data multidimensi yang umum digunakan dalam bidang meteorologi, klimatologi, dan penginderaan jauh.</p>
+<section id="membaca-file-netcdf">
+<h3>Membaca File NetCDF<a class="headerlink" href="#membaca-file-netcdf" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">netCDF4</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dataset</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="s2">&quot;openEO.nc&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3>Penjelasan<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<p>Kode digunakan untuk membuka dan membaca file hasil ekspor OpenEO.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="eksplorasi-data">
+<h2>3.2 Eksplorasi Data<a class="headerlink" href="#eksplorasi-data" title="Permalink to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">variables</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</pre></div>
+</div>
+<section id="id5">
+<h3>Penjelasan<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
+<p>Digunakan untuk melihat variabel yang tersedia pada file NetCDF.</p>
+<p>Contoh variabel:</p>
+<ul class="simple">
+<li><p>time</p></li>
+<li><p>x</p></li>
+<li><p>y</p></li>
+<li><p>NO2</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="mengatasi-missing-value">
+<h2>3.3 Mengatasi Missing Value<a class="headerlink" href="#mengatasi-missing-value" title="Permalink to this heading">#</a></h2>
+<section id="pengertian-missing-value">
+<h3>Pengertian Missing Value<a class="headerlink" href="#pengertian-missing-value" title="Permalink to this heading">#</a></h3>
+<p>Missing value adalah data yang tidak memiliki nilai akibat gangguan sensor, proses akuisisi, atau proses transformasi data.</p>
+</section>
+<section id="interpolasi-linear">
+<h3>Interpolasi Linear<a class="headerlink" href="#interpolasi-linear" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">series</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h3>Penjelasan<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
+<p>Interpolasi linear digunakan untuk memperkirakan nilai yang hilang berdasarkan nilai sebelum dan sesudahnya.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="menghitung-rata-rata-harian">
+<h2>3.4 Menghitung Rata-rata Harian<a class="headerlink" href="#menghitung-rata-rata-harian" title="Permalink to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">new_no2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">no2_filled</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+<section id="id7">
+<h3>Penjelasan<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h3>
+<p>Kode menghitung rata-rata seluruh grid spasial pada setiap waktu pengamatan.</p>
+<p>Output:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Tanggal</p></th>
+<th class="head"><p>NO₂</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>2023-10-01</p></td>
+<td><p>0.00014</p></td>
+</tr>
+<tr class="row-odd"><td><p>2023-10-02</p></td>
+<td><p>0.00015</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="pembersihan-data">
+<h1>4. Pembersihan Data<a class="headerlink" href="#pembersihan-data" title="Permalink to this heading">#</a></h1>
+<section id="pemeriksaan-tanggal-hilang">
+<h2>4.1 Pemeriksaan Tanggal Hilang<a class="headerlink" href="#pemeriksaan-tanggal-hilang" title="Permalink to this heading">#</a></h2>
+<section id="pengertian-missing-timestamp">
+<h3>Pengertian Missing Timestamp<a class="headerlink" href="#pengertian-missing-timestamp" title="Permalink to this heading">#</a></h3>
+<p>Missing timestamp merupakan tanggal yang tidak memiliki data pengamatan.</p>
+</section>
+<section id="pemeriksaan">
+<h3>Pemeriksaan<a class="headerlink" href="#pemeriksaan" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">missing_dates</span> <span class="o">=</span> <span class="n">full_range</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id8">
+<h3>Penjelasan<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
+<p>Digunakan untuk mendeteksi tanggal yang hilang dari rentang pengamatan.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="pengisian-data-hilang">
+<h2>4.2 Pengisian Data Hilang<a class="headerlink" href="#pengisian-data-hilang" title="Permalink to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="id9">
+<h3>Penjelasan<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h3>
+<p>Interpolasi berbasis waktu digunakan untuk mengisi tanggal yang tidak memiliki data.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="deteksi-outlier">
+<h2>4.3 Deteksi Outlier<a class="headerlink" href="#deteksi-outlier" title="Permalink to this heading">#</a></h2>
+<section id="pengertian-outlier">
+<h3>Pengertian Outlier<a class="headerlink" href="#pengertian-outlier" title="Permalink to this heading">#</a></h3>
+<p>Outlier merupakan nilai yang berbeda jauh dari pola umum data.</p>
+</section>
+<section id="metode-iqr">
+<h3>Metode IQR<a class="headerlink" href="#metode-iqr" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Q1</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="n">Q3</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
+
+<span class="n">IQR</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">-</span> <span class="n">Q1</span>
+</pre></div>
+</div>
+</section>
+<section id="rumus">
+<h3>Rumus<a class="headerlink" href="#rumus" title="Permalink to this heading">#</a></h3>
+<p>Batas bawah:</p>
+<p>Lower Bound = Q1 − 1.5 × IQR</p>
+<p>Batas atas:</p>
+<p>Upper Bound = Q3 + 1.5 × IQR</p>
+<p>Data di luar rentang tersebut dianggap outlier.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="penanganan-outlier">
+<h2>4.4 Penanganan Outlier<a class="headerlink" href="#penanganan-outlier" title="Permalink to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df_clean</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">interpolate</span><span class="p">()</span>
+</pre></div>
+</div>
+<section id="id10">
+<h3>Penjelasan<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h3>
+<p>Nilai outlier dihapus dan digantikan menggunakan interpolasi linear agar tidak memengaruhi model prediksi.</p>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="transformasi-data">
+<h1>5. Transformasi Data<a class="headerlink" href="#transformasi-data" title="Permalink to this heading">#</a></h1>
+<section id="konsep-time-series-forecasting">
+<h2>5.1 Konsep Time Series Forecasting<a class="headerlink" href="#konsep-time-series-forecasting" title="Permalink to this heading">#</a></h2>
+<p>Pada prediksi deret waktu, nilai masa lalu digunakan untuk memprediksi nilai masa depan.</p>
+<p>Contoh:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Hari-1</p></th>
+<th class="head"><p>Hari-2</p></th>
+<th class="head"><p>Hari-3</p></th>
+<th class="head"><p>Hari-4</p></th>
+<th class="head"><p>Target</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0.12</p></td>
+<td><p>0.13</p></td>
+<td><p>0.15</p></td>
+<td><p>0.14</p></td>
+<td><p>0.16</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<hr class="docutils" />
+<section id="membentuk-dataset-supervised">
+<h2>5.2 Membentuk Dataset Supervised<a class="headerlink" href="#membentuk-dataset-supervised" title="Permalink to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">create_dataset</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">lag</span><span class="p">):</span>
+</pre></div>
+</div>
+<section id="id11">
+<h3>Penjelasan<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h3>
+<p>Fungsi ini digunakan untuk mengubah data time series menjadi data supervised learning.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="normalisasi-data">
+<h2>5.3 Normalisasi Data<a class="headerlink" href="#normalisasi-data" title="Permalink to this heading">#</a></h2>
+<section id="pengertian-min-max-scaling">
+<h3>Pengertian Min-Max Scaling<a class="headerlink" href="#pengertian-min-max-scaling" title="Permalink to this heading">#</a></h3>
+<p>Normalisasi dilakukan agar seluruh data berada pada rentang yang sama.</p>
+</section>
+<section id="id12">
+<h3>Rumus<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h3>
+<p>X’ = (X − Xmin) / (Xmax − Xmin)</p>
+</section>
+<section id="implementasi">
+<h3>Implementasi<a class="headerlink" href="#implementasi" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="pemodelan-knn">
+<h1>6. Pemodelan KNN<a class="headerlink" href="#pemodelan-knn" title="Permalink to this heading">#</a></h1>
+<section id="pengertian-k-nearest-neighbor-regression">
+<h2>6.1 Pengertian K-Nearest Neighbor Regression<a class="headerlink" href="#pengertian-k-nearest-neighbor-regression" title="Permalink to this heading">#</a></h2>
+<p>K-Nearest Neighbor Regression merupakan metode machine learning yang melakukan prediksi berdasarkan rata-rata nilai dari sejumlah tetangga terdekat.</p>
+<p>Prinsip kerjanya:</p>
+<ol class="arabic simple">
+<li><p>Menghitung jarak data baru terhadap seluruh data pelatihan.</p></li>
+<li><p>Memilih K data terdekat.</p></li>
+<li><p>Menghitung rata-rata nilai target dari K tetangga tersebut.</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="pembagian-data">
+<h2>6.2 Pembagian Data<a class="headerlink" href="#pembagian-data" title="Permalink to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
+    <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<section id="id13">
+<h3>Penjelasan<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h3>
+<p>Data dibagi menjadi:</p>
+<ul class="simple">
+<li><p>80% data latih</p></li>
+<li><p>20% data uji</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="pelatihan-model">
+<h2>6.3 Pelatihan Model<a class="headerlink" href="#pelatihan-model" title="Permalink to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">KNeighborsRegressor</span><span class="p">(</span>
+    <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<section id="id14">
+<h3>Penjelasan<a class="headerlink" href="#id14" title="Permalink to this heading">#</a></h3>
+<p>Model menggunakan 5 tetangga terdekat untuk melakukan prediksi.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="prediksi">
+<h2>6.4 Prediksi<a class="headerlink" href="#prediksi" title="Permalink to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="id15">
+<h3>Penjelasan<a class="headerlink" href="#id15" title="Permalink to this heading">#</a></h3>
+<p>Digunakan untuk menghasilkan prediksi konsentrasi NO₂ berdasarkan data sebelumnya.</p>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="evaluasi-model">
+<h1>7. Evaluasi Model<a class="headerlink" href="#evaluasi-model" title="Permalink to this heading">#</a></h1>
+<section id="root-mean-square-error-rmse">
+<h2>7.1 Root Mean Square Error (RMSE)<a class="headerlink" href="#root-mean-square-error-rmse" title="Permalink to this heading">#</a></h2>
+<section id="pengertian">
+<h3>Pengertian<a class="headerlink" href="#pengertian" title="Permalink to this heading">#</a></h3>
+<p>Mengukur besar kesalahan prediksi model.</p>
+</section>
+<section id="id16">
+<h3>Rumus<a class="headerlink" href="#id16" title="Permalink to this heading">#</a></h3>
+<p>RMSE = √(Σ(y - ŷ)² / n)</p>
+<p>Semakin kecil RMSE maka model semakin baik.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="mean-absolute-percentage-error-mape">
+<h2>7.2 Mean Absolute Percentage Error (MAPE)<a class="headerlink" href="#mean-absolute-percentage-error-mape" title="Permalink to this heading">#</a></h2>
+<section id="id17">
+<h3>Pengertian<a class="headerlink" href="#id17" title="Permalink to this heading">#</a></h3>
+<p>Mengukur persentase kesalahan prediksi.</p>
+</section>
+<section id="id18">
+<h3>Rumus<a class="headerlink" href="#id18" title="Permalink to this heading">#</a></h3>
+<p>MAPE = (1/n) Σ |(y-ŷ)/y| × 100%</p>
+<p>Semakin kecil MAPE maka model semakin baik.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="r-square-r2">
+<h2>7.3 R-Square (R²)<a class="headerlink" href="#r-square-r2" title="Permalink to this heading">#</a></h2>
+<section id="id19">
+<h3>Pengertian<a class="headerlink" href="#id19" title="Permalink to this heading">#</a></h3>
+<p>Mengukur kemampuan model menjelaskan variasi data.</p>
+</section>
+<section id="id20">
+<h3>Rumus<a class="headerlink" href="#id20" title="Permalink to this heading">#</a></h3>
+<p>R² = 1 - (SSres / SStot)</p>
+<p>Nilai mendekati 1 menunjukkan model semakin baik.</p>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="visualisasi-hasil">
+<h1>8. Visualisasi Hasil<a class="headerlink" href="#visualisasi-hasil" title="Permalink to this heading">#</a></h1>
+<p>Grafik digunakan untuk membandingkan:</p>
+<ul class="simple">
+<li><p>Nilai aktual</p></li>
+<li><p>Nilai prediksi</p></li>
+</ul>
+<p>Pada beberapa skenario lag:</p>
+<ul class="simple">
+<li><p>Lag 4 hari</p></li>
+<li><p>Lag 10 hari</p></li>
+<li><p>Lag 30 hari</p></li>
+</ul>
+<p>Tujuannya untuk mengetahui jumlah data historis yang memberikan performa prediksi terbaik.</p>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="kesimpulan">
+<h1>9. Kesimpulan<a class="headerlink" href="#kesimpulan" title="Permalink to this heading">#</a></h1>
+<p>Penelitian ini memanfaatkan data Sentinel-5P yang diperoleh melalui platform OpenEO untuk memprediksi konsentrasi Nitrogen Dioksida (NO₂). Data yang diperoleh terlebih dahulu melalui proses agregasi, pembersihan data, interpolasi missing value, serta penanganan outlier menggunakan metode IQR.</p>
+<p>Setelah data bersih, dilakukan transformasi time series menjadi bentuk supervised learning dan normalisasi menggunakan Min-Max Scaling. Model K-Nearest Neighbor Regression kemudian dilatih menggunakan beberapa variasi lag, yaitu 4 hari, 10 hari, dan 30 hari.</p>
+<p>Hasil evaluasi menggunakan RMSE, MAPE, dan R² menunjukkan bahwa metode KNN mampu memanfaatkan pola historis data NO₂ untuk melakukan prediksi. Perbandingan beberapa nilai lag juga memberikan informasi mengenai jumlah data historis yang paling efektif dalam menghasilkan prediksi yang akurat.</p>
+<p>Secara keseluruhan, kombinasi data Sentinel-5P dan metode KNN Regression dapat digunakan sebagai pendekatan sederhana namun efektif dalam melakukan prediksi kualitas udara berdasarkan konsentrasi Nitrogen Dioksida.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="pertemuan_9.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Pertemuan_9</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Prediksi Konsentrasi Nitrogen Dioksida (NO₂) Menggunakan Metode K-Nearest Neighbor (KNN)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#latar-belakang">1. Latar Belakang</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pengumpulan-data">2. Pengumpulan Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian-openeo">2.1 Pengertian OpenEO</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#import-library-openeo">Import Library OpenEO</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#koneksi-ke-server-openeo">2.2 Koneksi ke Server OpenEO</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#penjelasan">Penjelasan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menentukan-area-penelitian">2.3 Menentukan Area Penelitian</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Penjelasan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengambil-data-sentinel-5p">2.4 Mengambil Data Sentinel-5P</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian-sentinel-5p">Pengertian Sentinel-5P</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pengambilan-data">Pengambilan Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Penjelasan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agregasi-data">2.5 Agregasi Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian-agregasi">Pengertian Agregasi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#agregasi-temporal">Agregasi Temporal</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#agregasi-spasial">Agregasi Spasial</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menyimpan-data">2.6 Menyimpan Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Penjelasan</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#persiapan-data">3. Persiapan Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian-format-netcdf">3.1 Pengertian Format NetCDF</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membaca-file-netcdf">Membaca File NetCDF</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Penjelasan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-data">3.2 Eksplorasi Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Penjelasan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengatasi-missing-value">3.3 Mengatasi Missing Value</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian-missing-value">Pengertian Missing Value</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpolasi-linear">Interpolasi Linear</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Penjelasan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menghitung-rata-rata-harian">3.4 Menghitung Rata-rata Harian</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Penjelasan</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pembersihan-data">4. Pembersihan Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pemeriksaan-tanggal-hilang">4.1 Pemeriksaan Tanggal Hilang</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian-missing-timestamp">Pengertian Missing Timestamp</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pemeriksaan">Pemeriksaan</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Penjelasan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pengisian-data-hilang">4.2 Pengisian Data Hilang</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Penjelasan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deteksi-outlier">4.3 Deteksi Outlier</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian-outlier">Pengertian Outlier</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metode-iqr">Metode IQR</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rumus">Rumus</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penanganan-outlier">4.4 Penanganan Outlier</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Penjelasan</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#transformasi-data">5. Transformasi Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konsep-time-series-forecasting">5.1 Konsep Time Series Forecasting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membentuk-dataset-supervised">5.2 Membentuk Dataset Supervised</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Penjelasan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#normalisasi-data">5.3 Normalisasi Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian-min-max-scaling">Pengertian Min-Max Scaling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Rumus</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementasi">Implementasi</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pemodelan-knn">6. Pemodelan KNN</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian-k-nearest-neighbor-regression">6.1 Pengertian K-Nearest Neighbor Regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pembagian-data">6.2 Pembagian Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Penjelasan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pelatihan-model">6.3 Pelatihan Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Penjelasan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prediksi">6.4 Prediksi</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">Penjelasan</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluasi-model">7. Evaluasi Model</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#root-mean-square-error-rmse">7.1 Root Mean Square Error (RMSE)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian">Pengertian</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">Rumus</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-absolute-percentage-error-mape">7.2 Mean Absolute Percentage Error (MAPE)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">Pengertian</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">Rumus</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#r-square-r2">7.3 R-Square (R²)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">Pengertian</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">Rumus</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-hasil">8. Visualisasi Hasil</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">9. Kesimpulan</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By RB. Ainul Yakin
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
