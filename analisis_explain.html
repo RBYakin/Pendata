@@ -455,6 +455,11 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kode-program-utuh-bebas-error">5. Kode Program Utuh (Bebas Error)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan-dan-interpretasi-model">6. Kesimpulan dan Interpretasi Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-pengertian-metode-interpretabilitas-yang-digunakan">A. Pengertian Metode Interpretabilitas yang Digunakan</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-temuan-utama-analisis-data-key-insights">B. Temuan Utama Analisis Data (<em>Key Insights</em>)</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -537,16 +542,16 @@ document.write(`
 <ul class="simple">
 <li><p><strong>SHAP Local Force Plot:</strong> Membedah kontribusi individual pada satu sampel baris data (observasi pertama) untuk melihat fitur mana yang mendorong nilai prediksi ke atas (zona merah) atau menurunkannya ke bawah (zona biru).</p></li>
 </ul>
-<p><img alt="alt text" src="froce_plot.png" /></p>
+<p><img alt="alt text" src="_images/force_plot.png" /></p>
 <ul class="simple">
 <li><p><strong>SHAP Bar Plot (200 Observasi):</strong> Menghitung nilai absolut rata-rata kontribusi SHAP pada 200 data pertama guna memvalidasi kepentingan fitur secara masal tanpa merusak batas rendering matplotlib.</p></li>
 </ul>
-<p><img alt="alt text" src="observasi.png" /></p>
+<p><img alt="alt text" src="_images/observasi.png" /></p>
 </section>
 <section id="tahap-5-partial-dependence-plot-pdp">
 <h3>Tahap 5: Partial Dependence Plot (PDP)<a class="headerlink" href="#tahap-5-partial-dependence-plot-pdp" title="Permalink to this heading">#</a></h3>
 <p>Menggunakan <code class="docutils literal notranslate"><span class="pre">PartialDependenceDisplay</span></code> untuk melihat hubungan marjinal antara target dengan fitur <code class="docutils literal notranslate"><span class="pre">Temperature</span></code> dan <code class="docutils literal notranslate"><span class="pre">lag_1</span></code>. Pada fitur suhu, grafik akan menunjukkan karakteristik lengkungan non-linear berbentuk huruf <strong>“U”</strong>. Hal ini membuktikan interpretasi fisik bahwa beban permintaan listrik akan melonjak tinggi baik pada saat suhu udara sangat dingin (penggunaan pemanas) maupun saat suhu udara sangat panas (penggunaan AC).</p>
-<p><img alt="alt text" src="dependence.png" /></p>
+<p><img alt="alt text" src="_images/dependence.png" /></p>
 </section>
 </section>
 <hr class="docutils" />
@@ -688,8 +693,36 @@ document.write(`
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Partial Dependence Plot (Temperature &amp; Lag 1)&quot;</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
 </pre></div>
 </div>
+</section>
+<hr class="docutils" />
+<section id="kesimpulan-dan-interpretasi-model">
+<h2>6. Kesimpulan dan Interpretasi Model<a class="headerlink" href="#kesimpulan-dan-interpretasi-model" title="Permalink to this heading">#</a></h2>
+<p>Berdasarkan seluruh rangkaian analisis <em>Explainable AI</em> (XAI) yang telah dilakukan terhadap model peramalan permintaan listrik (<code class="docutils literal notranslate"><span class="pre">LGBMRegressor</span></code> melalui <code class="docutils literal notranslate"><span class="pre">Skforecast</span></code>), beberapa poin kritis yang dapat disimpulkan adalah:</p>
+<section id="a-pengertian-metode-interpretabilitas-yang-digunakan">
+<h3>A. Pengertian Metode Interpretabilitas yang Digunakan<a class="headerlink" href="#a-pengertian-metode-interpretabilitas-yang-digunakan" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Gini Importance &amp; Permutation Importance:</strong> Digunakan untuk mengukur tingkat kepentingan fitur secara global. Bedanya, Gini melihat struktur internal pohon keputusan, sedangkan Permutation menguji seberapa bergantung model pada suatu fitur dengan cara mengacak nilainya secara paksa dan melihat dampak penurunan performanya.</p></li>
+<li><p><strong>SHAP (Shapley Additive exPlanations):</strong> Pendekatan berbasis teori permainan (<em>game theory</em>) yang mengukur kontribusi spesifik setiap fitur terhadap arah prediksi. SHAP mampu bekerja secara global (melihat pola seluruh dataset) sekaligus lokal (membedah alasan model memprediksi angka tertentu pada hari tertentu).</p></li>
+<li><p><strong>Partial Dependence Plot (PDP):</strong> Grafik yang memperlihatkan pengaruh marjinal dari satu atau dua fitur tunggal terhadap nilai prediksi target, dengan cara mengisolasi dan mengasumsikan fitur-fitur lainnya konstan.</p></li>
+</ul>
+</section>
+<section id="b-temuan-utama-analisis-data-key-insights">
+<h3>B. Temuan Utama Analisis Data (<em>Key Insights</em>)<a class="headerlink" href="#b-temuan-utama-analisis-data-key-insights" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Dominasi Pola Historis (Efek Autoregresif):</strong> Fitur <code class="docutils literal notranslate"><span class="pre">lag_1</span></code> (penggunaan listrik kemarin) dan <code class="docutils literal notranslate"><span class="pre">lag_7</span></code> (penggunaan listrik pada hari yang sama di minggu lalu) secara konsisten menempati peringkat teratas dalam <em>Feature Importance</em> dan nilai SHAP. Hal ini menunjukkan bahwa konsumsi listrik harian sangat dipengaruhi oleh rutinitas atau kebiasaan masyarakat yang berulang dalam siklus mingguan.</p></li>
+<li><p><strong>Karakteristik Non-Linear Suhu Udara (Kurva U):</strong> Melalui grafik PDP dan SHAP <em>Dependence Plot</em>, terbukti secara empiris adanya hubungan non-linear berbentuk huruf <strong>“U”</strong> antara <code class="docutils literal notranslate"><span class="pre">Temperature</span></code> dan <code class="docutils literal notranslate"><span class="pre">Demand</span></code>.</p>
+<ul>
+<li><p>Ketika suhu udara berada di titik ekstrem <strong>sangat dingin</strong>, permintaan listrik melonjak tajam akibat penggunaan sistem pemanas ruangan (<em>heater</em>).</p></li>
+<li><p>Ketika suhu udara berada di titik ekstrem <strong>sangat panas</strong>, permintaan listrik juga melonjak drastis akibat penggunaan pendingin ruangan (<em>AC</em>).</p></li>
+<li><p>Permintaan listrik berada di titik terendah ketika suhu udara berada di zona nyaman/moderat (sekitar <strong>15°C</strong> hingga <strong>20°C</strong>).</p></li>
+</ul>
+</li>
+<li><p><strong>Transparansi Model Box-Hitam:</strong> Melalui <em>Local Force Plot</em>, model tidak lagi bersifat misterius. Kita dapat melacak secara presisi bahwa pada tanggal tertentu (misalnya 22 Desember 2014), lonjakan prediksi listrik dipicu secara aditif oleh suhu udara panas ekstrem hari itu yang bersinergi dengan tingginya angka konsumsi listrik dari hari sebelumnya.</p></li>
+</ul>
+</section>
 </section>
 </section>
 
@@ -764,6 +797,11 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kode-program-utuh-bebas-error">5. Kode Program Utuh (Bebas Error)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan-dan-interpretasi-model">6. Kesimpulan dan Interpretasi Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-pengertian-metode-interpretabilitas-yang-digunakan">A. Pengertian Metode Interpretabilitas yang Digunakan</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-temuan-utama-analisis-data-key-insights">B. Temuan Utama Analisis Data (<em>Key Insights</em>)</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

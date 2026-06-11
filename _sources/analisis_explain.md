@@ -57,7 +57,7 @@ Menerapkan `shap.TreeExplainer` untuk melihat kontribusi linear maupun non-linea
 
 * **SHAP Local Force Plot:** Membedah kontribusi individual pada satu sampel baris data (observasi pertama) untuk melihat fitur mana yang mendorong nilai prediksi ke atas (zona merah) atau menurunkannya ke bawah (zona biru).
 
-![alt text](froce_plot.png)
+![alt text](force_plot.png)
 
 * **SHAP Bar Plot (200 Observasi):** Menghitung nilai absolut rata-rata kontribusi SHAP pada 200 data pertama guna memvalidasi kepentingan fitur secara masal tanpa merusak batas rendering matplotlib.
 
@@ -209,3 +209,23 @@ display_pdp = PartialDependenceDisplay.from_estimator(
 ax.set_title("Partial Dependence Plot (Temperature & Lag 1)")
 fig.tight_layout()
 plt.show()
+
+```
+
+---
+## 6. Kesimpulan dan Interpretasi Model
+
+Berdasarkan seluruh rangkaian analisis *Explainable AI* (XAI) yang telah dilakukan terhadap model peramalan permintaan listrik (`LGBMRegressor` melalui `Skforecast`), beberapa poin kritis yang dapat disimpulkan adalah:
+
+### A. Pengertian Metode Interpretabilitas yang Digunakan
+* **Gini Importance & Permutation Importance:** Digunakan untuk mengukur tingkat kepentingan fitur secara global. Bedanya, Gini melihat struktur internal pohon keputusan, sedangkan Permutation menguji seberapa bergantung model pada suatu fitur dengan cara mengacak nilainya secara paksa dan melihat dampak penurunan performanya.
+* **SHAP (Shapley Additive exPlanations):** Pendekatan berbasis teori permainan (*game theory*) yang mengukur kontribusi spesifik setiap fitur terhadap arah prediksi. SHAP mampu bekerja secara global (melihat pola seluruh dataset) sekaligus lokal (membedah alasan model memprediksi angka tertentu pada hari tertentu).
+* **Partial Dependence Plot (PDP):** Grafik yang memperlihatkan pengaruh marjinal dari satu atau dua fitur tunggal terhadap nilai prediksi target, dengan cara mengisolasi dan mengasumsikan fitur-fitur lainnya konstan.
+
+### B. Temuan Utama Analisis Data (*Key Insights*)
+* **Dominasi Pola Historis (Efek Autoregresif):** Fitur `lag_1` (penggunaan listrik kemarin) dan `lag_7` (penggunaan listrik pada hari yang sama di minggu lalu) secara konsisten menempati peringkat teratas dalam *Feature Importance* dan nilai SHAP. Hal ini menunjukkan bahwa konsumsi listrik harian sangat dipengaruhi oleh rutinitas atau kebiasaan masyarakat yang berulang dalam siklus mingguan.
+* **Karakteristik Non-Linear Suhu Udara (Kurva U):** Melalui grafik PDP dan SHAP *Dependence Plot*, terbukti secara empiris adanya hubungan non-linear berbentuk huruf **"U"** antara `Temperature` dan `Demand`.
+  * Ketika suhu udara berada di titik ekstrem **sangat dingin**, permintaan listrik melonjak tajam akibat penggunaan sistem pemanas ruangan (*heater*).
+  * Ketika suhu udara berada di titik ekstrem **sangat panas**, permintaan listrik juga melonjak drastis akibat penggunaan pendingin ruangan (*AC*).
+  * Permintaan listrik berada di titik terendah ketika suhu udara berada di zona nyaman/moderat (sekitar **15°C** hingga **20°C**).
+* **Transparansi Model Box-Hitam:** Melalui *Local Force Plot*, model tidak lagi bersifat misterius. Kita dapat melacak secara presisi bahwa pada tanggal tertentu (misalnya 22 Desember 2014), lonjakan prediksi listrik dipicu secara aditif oleh suhu udara panas ekstrem hari itu yang bersinergi dengan tingginya angka konsumsi listrik dari hari sebelumnya.
