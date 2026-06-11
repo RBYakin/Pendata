@@ -53,7 +53,7 @@ Pentingnya fitur dievaluasi menggunakan dua cara:
 Menerapkan `shap.TreeExplainer` untuk melihat kontribusi linear maupun non-linear setiap fitur secara aditif:
 * **SHAP Summary Plot:** Menampilkan sebaran titik kontribusi. Warna merah menunjukkan nilai fitur tinggi, biru menunjukkan nilai fitur rendah. Dari grafik ini, kontribusi fitur `Temperature` dan `lag_1` terlihat paling mendominasi.
 
-![alt text](sumarry_plot.png)
+![alt text](summary_plot.png)
 
 * **SHAP Local Force Plot:** Membedah kontribusi individual pada satu sampel baris data (observasi pertama) untuk melihat fitur mana yang mendorong nilai prediksi ke atas (zona merah) atau menurunkannya ke bawah (zona biru).
 
